@@ -8,7 +8,7 @@
   "host": "homeschool-api-9w45.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "consumes": [
     "application/json"
