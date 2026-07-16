@@ -5,7 +5,7 @@
     "description": "API for managing math and reading homeschool materials.",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "homeschool-api-9w45.onrender.com",
   "basePath": "/",
   "schemes": [
     "http"
