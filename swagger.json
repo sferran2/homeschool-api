@@ -1,0 +1,542 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Homeschool Inventory API",
+    "description": "API for managing math and reading homeschool materials.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Math",
+      "description": "CRUD operations for math materials."
+    },
+    {
+      "name": "Reading",
+      "description": "CRUD operations for reading materials."
+    }
+  ],
+  "definitions": {
+    "MaterialInput": {
+      "type": "object",
+      "required": [
+        "inventoryNumber",
+        "name",
+        "category",
+        "ageRange",
+        "skills",
+        "quantity",
+        "condition"
+      ],
+      "properties": {
+        "inventoryNumber": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Counting Bears"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Book",
+            "Game",
+            "Puzzle",
+            "Manipulative",
+            "Flashcards",
+            "Workbook",
+            "Sensory",
+            "Toy",
+            "Other"
+          ],
+          "example": "Manipulative"
+        },
+        "ageRange": {
+          "type": "string",
+          "example": "3-8"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "Counting",
+            "Sorting",
+            "Color Recognition"
+          ]
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "example": 48
+        },
+        "condition": {
+          "type": "string",
+          "enum": [
+            "Excellent",
+            "Good",
+            "Fair",
+            "Needs Repair",
+            "Missing Pieces"
+          ],
+          "example": "Excellent"
+        },
+        "notes": {
+          "type": "string",
+          "example": "Complete set with storage container."
+        }
+      }
+    },
+    "Material": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MaterialInput"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "6877f8b5d7c5f2a4d8c4f123"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "__v": {
+              "type": "integer",
+              "example": 0
+            }
+          }
+        }
+      ]
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Validation failed."
+        },
+        "error": {
+          "type": "string",
+          "example": "Name is required."
+        }
+      }
+    }
+  },
+  "paths": {
+    "/math": {
+      "get": {
+        "tags": [
+          "Math"
+        ],
+        "summary": "Get all math materials",
+        "description": "Returns all documents from the math collection.",
+        "responses": {
+          "200": {
+            "description": "Math materials retrieved successfully.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Material"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Math"
+        ],
+        "summary": "Create a math material",
+        "description": "Creates a new document in the math collection.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Math material information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MaterialInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Math material created successfully.",
+            "schema": {
+              "$ref": "#/definitions/Material"
+            }
+          },
+          "400": {
+            "description": "Validation error or duplicate inventory number.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/math/{id}": {
+      "get": {
+        "tags": [
+          "Math"
+        ],
+        "summary": "Get one math material",
+        "description": "Returns one math material using its MongoDB ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ID of the math material."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Math material retrieved successfully.",
+            "schema": {
+              "$ref": "#/definitions/Material"
+            }
+          },
+          "400": {
+            "description": "Invalid MongoDB ID.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Math material not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Math"
+        ],
+        "summary": "Update a math material",
+        "description": "Updates an existing math material using its MongoDB ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ID of the math material."
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated math material information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MaterialInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Math material updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/Material"
+            }
+          },
+          "400": {
+            "description": "Invalid ID, validation error, or duplicate inventory number.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Math material not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Math"
+        ],
+        "summary": "Delete a math material",
+        "description": "Deletes a math material using its MongoDB ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ID of the math material."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Math material deleted successfully."
+          },
+          "400": {
+            "description": "Invalid MongoDB ID.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Math material not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/reading": {
+      "get": {
+        "tags": [
+          "Reading"
+        ],
+        "summary": "Get all reading materials",
+        "description": "Returns all documents from the reading collection.",
+        "responses": {
+          "200": {
+            "description": "Reading materials retrieved successfully.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Material"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reading"
+        ],
+        "summary": "Create a reading material",
+        "description": "Creates a new document in the reading collection.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Reading material information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MaterialInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Reading material created successfully.",
+            "schema": {
+              "$ref": "#/definitions/Material"
+            }
+          },
+          "400": {
+            "description": "Validation error or duplicate inventory number.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/reading/{id}": {
+      "get": {
+        "tags": [
+          "Reading"
+        ],
+        "summary": "Get one reading material",
+        "description": "Returns one reading material using its MongoDB ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ID of the reading material."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reading material retrieved successfully.",
+            "schema": {
+              "$ref": "#/definitions/Material"
+            }
+          },
+          "400": {
+            "description": "Invalid MongoDB ID.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Reading material not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reading"
+        ],
+        "summary": "Update a reading material",
+        "description": "Updates an existing reading material using its MongoDB ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ID of the reading material."
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated reading material information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MaterialInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reading material updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/Material"
+            }
+          },
+          "400": {
+            "description": "Invalid ID, validation error, or duplicate inventory number.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Reading material not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reading"
+        ],
+        "summary": "Delete a reading material",
+        "description": "Deletes a reading material using its MongoDB ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ID of the reading material."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reading material deleted successfully."
+          },
+          "400": {
+            "description": "Invalid MongoDB ID.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Reading material not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
