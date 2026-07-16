@@ -78,4 +78,4 @@ const mathSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('MathMaterial', mathSchema);
+module.exports = mongoose.model('MathMaterial', mathSchema, 'math');

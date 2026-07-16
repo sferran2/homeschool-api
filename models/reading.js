@@ -78,4 +78,4 @@ const readingSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('ReadingMaterial', readingSchema);
+module.exports = mongoose.model('ReadingMaterial', readingSchema, 'reading');
