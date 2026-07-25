@@ -2,15 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const mathController = require('../controllers/math');
+const isAuthenticated = require('../middleware/isAuthenticated');
 
 router.get('/', mathController.getAll);
 
 router.get('/:id', mathController.getSingle);
 
-router.post('/', mathController.createItem);
+router.post('/', isAuthenticated, mathController.createItem);
 
-router.put('/:id', mathController.updateItem);
+router.put('/:id', isAuthenticated, mathController.updateItem);
 
-router.delete('/:id', mathController.deleteItem);
+router.delete('/:id', isAuthenticated, mathController.deleteItem);
 
 module.exports = router;
