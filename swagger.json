@@ -27,7 +27,10 @@
   "paths": {
     "/math/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Math Materials"
+        ],
+        "description": "Get all math materials",
         "responses": {
           "200": {
             "description": "OK"
@@ -38,7 +41,10 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Math Materials"
+        ],
+        "description": "Create a new math material",
         "parameters": [
           {
             "name": "body",
@@ -92,7 +98,10 @@
     },
     "/math/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Math Materials"
+        ],
+        "description": "Get one math material by ID",
         "parameters": [
           {
             "name": "id",
@@ -117,7 +126,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Math Materials"
+        ],
+        "description": "Update a math material by ID",
         "parameters": [
           {
             "name": "id",
@@ -178,7 +190,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Math Materials"
+        ],
+        "description": "Delete a math material by ID",
         "parameters": [
           {
             "name": "id",
@@ -208,7 +223,10 @@
     },
     "/reading/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Reading Materials"
+        ],
+        "description": "Get all reading materials",
         "responses": {
           "200": {
             "description": "OK"
@@ -219,7 +237,10 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Reading Materials"
+        ],
+        "description": "Create a new reading material",
         "parameters": [
           {
             "name": "body",
@@ -273,7 +294,10 @@
     },
     "/reading/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Reading Materials"
+        ],
+        "description": "Get one reading material by ID",
         "parameters": [
           {
             "name": "id",
@@ -298,7 +322,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Reading Materials"
+        ],
+        "description": "Update a reading material by ID",
         "parameters": [
           {
             "name": "id",
@@ -359,7 +386,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Reading Materials"
+        ],
+        "description": "Delete a reading material by ID",
         "parameters": [
           {
             "name": "id",
@@ -389,7 +419,10 @@
     },
     "/auth/google": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Start Google OAuth authentication",
         "responses": {
           "default": {
             "description": ""
@@ -399,7 +432,10 @@
     },
     "/auth/google/callback": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Handle the Google OAuth callback",
         "responses": {
           "default": {
             "description": ""
@@ -409,7 +445,10 @@
     },
     "/auth/success": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Return the authenticated user after a successful login",
         "responses": {
           "200": {
             "description": "OK"
@@ -419,7 +458,10 @@
     },
     "/auth/failure": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Return an authentication failure response",
         "responses": {
           "401": {
             "description": "Unauthorized"
@@ -429,7 +471,10 @@
     },
     "/auth/status": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Check the current authentication status",
         "responses": {
           "200": {
             "description": "OK"
@@ -442,7 +487,10 @@
     },
     "/auth/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Log out the current user",
         "responses": {
           "200": {
             "description": "OK"

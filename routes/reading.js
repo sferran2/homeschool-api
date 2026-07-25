@@ -4,29 +4,52 @@ const router = express.Router();
 const readingController = require('../controllers/reading');
 const isAuthenticated = require('../middleware/isAuthenticated');
 
-/*  #swagger.tags = ['Reading Materials']
+router.get(
+  '/',
+  /*
+    #swagger.tags = ['Reading Materials']
     #swagger.description = 'Get all reading materials'
-*/
-router.get('/', readingController.getAll);
+  */
+  readingController.getAll
+);
 
-/*  #swagger.tags = ['Reading Materials']
-    #swagger.description = 'Get a reading material by ID'
-*/
-router.get('/:id', readingController.getSingle);
+router.get(
+  '/:id',
+  /*
+    #swagger.tags = ['Reading Materials']
+    #swagger.description = 'Get one reading material by ID'
+  */
+  readingController.getSingle
+);
 
-/*  #swagger.tags = ['Reading Materials']
+router.post(
+  '/',
+  /*
+    #swagger.tags = ['Reading Materials']
     #swagger.description = 'Create a new reading material'
-*/
-router.post('/', isAuthenticated, readingController.createItem);
+  */
+  isAuthenticated,
+  readingController.createItem
+);
 
-/*  #swagger.tags = ['Reading Materials']
-    #swagger.description = 'Update a reading material'
-*/
-router.put('/:id', isAuthenticated, readingController.updateItem);
+router.put(
+  '/:id',
+  /*
+    #swagger.tags = ['Reading Materials']
+    #swagger.description = 'Update a reading material by ID'
+  */
+  isAuthenticated,
+  readingController.updateItem
+);
 
-/*  #swagger.tags = ['Reading Materials']
-    #swagger.description = 'Delete a reading material'
-*/
-router.delete('/:id', isAuthenticated, readingController.deleteItem);
+router.delete(
+  '/:id',
+  /*
+    #swagger.tags = ['Reading Materials']
+    #swagger.description = 'Delete a reading material by ID'
+  */
+  isAuthenticated,
+  readingController.deleteItem
+);
 
 module.exports = router;

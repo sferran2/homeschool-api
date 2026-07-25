@@ -3,21 +3,23 @@ const passport = require('passport');
 
 const router = express.Router();
 
-/*  #swagger.tags = ['Authentication']
-    #swagger.description = 'Start Google OAuth authentication'
-*/
 router.get(
   '/google',
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.description = 'Start Google OAuth authentication'
+  */
   passport.authenticate('google', {
     scope: ['profile', 'email']
   })
 );
 
-/*  #swagger.tags = ['Authentication']
-    #swagger.description = 'Google OAuth callback'
-*/
 router.get(
   '/google/callback',
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.description = 'Handle the Google OAuth callback'
+  */
   passport.authenticate('google', {
     failureRedirect: '/auth/failure'
   }),
@@ -26,62 +28,79 @@ router.get(
   }
 );
 
-/*  #swagger.tags = ['Authentication']
-    #swagger.description = 'Successful login'
-*/
-router.get('/success', (req, res) => {
-  res.status(200).json({
-    message: 'Login successful',
-    user: req.user
-  });
-});
-
-/*  #swagger.tags = ['Authentication']
-    #swagger.description = 'Failed login'
-*/
-router.get('/failure', (req, res) => {
-  res.status(401).json({
-    message: 'Google authentication failed'
-  });
-});
-
-/*  #swagger.tags = ['Authentication']
-    #swagger.description = 'Check authentication status'
-*/
-router.get('/status', (req, res) => {
-  if (req.isAuthenticated()) {
-    return res.status(200).json({
-      authenticated: true,
+router.get(
+  '/success',
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.description = 'Return the authenticated user after a successful login'
+  */
+  (req, res) => {
+    res.status(200).json({
+      message: 'Login successful',
       user: req.user
     });
   }
+);
 
-  return res.status(401).json({
-    authenticated: false,
-    message: 'User is not authenticated'
-  });
-});
+router.get(
+  '/failure',
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.description = 'Return an authentication failure response'
+  */
+  (req, res) => {
+    res.status(401).json({
+      message: 'Google authentication failed'
+    });
+  }
+);
 
-/*  #swagger.tags = ['Authentication']
-    #swagger.description = 'Logout current user'
-*/
-router.get('/logout', (req, res, next) => {
-  req.logout((error) => {
-    if (error) {
-      return next(error);
+router.get(
+  '/status',
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.description = 'Check the current authentication status'
+  */
+  (req, res) => {
+    if (req.isAuthenticated()) {
+      return res.status(200).json({
+        authenticated: true,
+        user: req.user
+      });
     }
 
-    req.session.destroy((sessionError) => {
-      if (sessionError) {
-        return next(sessionError);
+    return res.status(401).json({
+      authenticated: false,
+      message: 'User is not authenticated'
+    });
+  }
+);
+
+router.get(
+  '/logout',
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.description = 'Log out the current user'
+  */
+  (req, res, next) => {
+    req.logout((error) => {
+      if (error) {
+        return next(error);
       }
 
-      res.clearCookie('connect.sid');
-      return res.status(200).json({
-        message: 'Logout successful'
+      req.session.destroy((sessionError) => {
+        if (sessionError) {
+          return next(sessionError);
+        }
+
+        res.clearCookie('connect.sid');
+
+        return res.status(200).json({
+          message: 'Logout successful'
+        });
       });
     });
-  });
-});
+  }
+);
 
 module.exports = router;
