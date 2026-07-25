@@ -6,8 +6,8 @@ const doc = {
     description:
       'API for managing math and reading homeschool materials.'
   },
-  host: 'localhost:8080',
-  schemes: ['http']
+  host: 'homeschool-api-9w45.onrender.com',
+  schemes: ['https']
 };
 
 const outputFile = './swagger.json';
