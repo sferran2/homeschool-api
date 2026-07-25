@@ -7,6 +7,20 @@
   },
   "host": "homeschool-api-9w45.onrender.com",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Math Materials",
+      "description": "Operations for managing math inventory."
+    },
+    {
+      "name": "Reading Materials",
+      "description": "Operations for managing reading inventory."
+    },
+    {
+      "name": "Authentication",
+      "description": "Google OAuth authentication routes."
+    }
+  ],
   "schemes": [
     "https"
   ],

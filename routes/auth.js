@@ -3,7 +3,9 @@ const passport = require('passport');
 
 const router = express.Router();
 
-// Start Google authentication
+/*  #swagger.tags = ['Authentication']
+    #swagger.description = 'Start Google OAuth authentication'
+*/
 router.get(
   '/google',
   passport.authenticate('google', {
@@ -11,7 +13,9 @@ router.get(
   })
 );
 
-// Google callback
+/*  #swagger.tags = ['Authentication']
+    #swagger.description = 'Google OAuth callback'
+*/
 router.get(
   '/google/callback',
   passport.authenticate('google', {
@@ -22,7 +26,9 @@ router.get(
   }
 );
 
-// Successful login
+/*  #swagger.tags = ['Authentication']
+    #swagger.description = 'Successful login'
+*/
 router.get('/success', (req, res) => {
   res.status(200).json({
     message: 'Login successful',
@@ -30,14 +36,18 @@ router.get('/success', (req, res) => {
   });
 });
 
-// Failed login
+/*  #swagger.tags = ['Authentication']
+    #swagger.description = 'Failed login'
+*/
 router.get('/failure', (req, res) => {
   res.status(401).json({
     message: 'Google authentication failed'
   });
 });
 
-// Check authentication status
+/*  #swagger.tags = ['Authentication']
+    #swagger.description = 'Check authentication status'
+*/
 router.get('/status', (req, res) => {
   if (req.isAuthenticated()) {
     return res.status(200).json({
@@ -52,7 +62,9 @@ router.get('/status', (req, res) => {
   });
 });
 
-// Logout
+/*  #swagger.tags = ['Authentication']
+    #swagger.description = 'Logout current user'
+*/
 router.get('/logout', (req, res, next) => {
   req.logout((error) => {
     if (error) {
